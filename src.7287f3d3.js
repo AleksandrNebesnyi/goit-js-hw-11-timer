@@ -5,4 +5,4 @@ function t(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as
 },{}],"Focm":[function(require,module,exports) {
 "use strict";require("./scss/main.scss"),require("./js/timer");
 },{"./scss/main.scss":"fx60","./js/timer":"yCUT"}]},{},["Focm"], null)
-//# sourceMappingURL=/goit-js-hw-11-color-switch/src.7287f3d3.js.map
+//# sourceMappingURL=/goit-js-hw-11-timer/src.7287f3d3.js.map
