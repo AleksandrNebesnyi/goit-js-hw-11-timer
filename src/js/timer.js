@@ -1,10 +1,5 @@
 // Плагин это класс CountdownTimer, экземпляр которого создает новый таймер с настройками.
 
-// new CountdownTimer({
-//   selector: '#timer-1',
-//   targetDate: new Date('Jul 17, 2019'),
-// });
-
 const refs = {
   timer: document.querySelector('[data-value="days"]'),
   days: document.querySelector('[data-value="days"]'),
@@ -46,42 +41,41 @@ function getTimeComponents(time) {
   return { days, hours, mins, secs };
 }
 
-class CountdownTimer {}
-
-// function init() {
-//   const time = getTimeComponents(0);
-//   //   onTick(time);
-// }
-let intervalId = null;
-const targetDate = new Date("Oct 25, 2021");
-let isActive = false;
-
-function start() {
-  if (isActive) {
-    return;
+class CountdownTimer {
+  constructor({ onTick, TargetDate }) {
+    this.intervalId = null;
+    this.isActive = false;
+    this.onTick = onTick;
+    this.TargetDate = TargetDate;
   }
-
-  isActive = true;
-
-  intervalId = setInterval(() => {
-    const currentTime = Date.now();
-    const deltaTime = targetDate - currentTime;
-    const { days, hours, mins, secs } = getTimeComponents(deltaTime);
-    updateClockInterface({ days, hours, mins, secs });
-  }, 1000);
+  start() {
+    if (this.isActive) {
+      return;
+    }
+    this.isActive = true;
+    this.intervalId = setInterval(() => {
+      const currentTime = Date.now();
+      const deltaTime = this.TargetDate - currentTime;
+      const time = getTimeComponents(deltaTime);
+      this.onTick(time);
+    }, 1000);
+  }
+  stop() {
+    clearInterval(this.intervalId);
+    this.isActive = false;
+  }
 }
 
-// * - Принимает время в миллисекундах
-//  * - Высчитывает сколько в них вмещается часов/минут/секунд
-//  * - Рисует интерфейс
-//  */
 function updateClockInterface({ days, hours, mins, secs }) {
   refs.days.textContent = `${days}`;
   refs.hours.textContent = `${hours}`;
   refs.mins.textContent = `${mins}`;
   refs.secs.textContent = `${secs}`;
 }
-function init() {
-  updateClockInterface(getTimeComponents(targetDate - Date.now()));
-}
-start();
+
+const timer = new CountdownTimer({
+  onTick: updateClockInterface,
+  TargetDate: new Date("Oct 18, 2021"),
+});
+
+timer.start();
