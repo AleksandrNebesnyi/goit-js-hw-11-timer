@@ -1,13 +1,5 @@
 // Плагин это класс CountdownTimer, экземпляр которого создает новый таймер с настройками.
 
-const refs = {
-  timer: document.querySelector('[data-value="days"]'),
-  days: document.querySelector('[data-value="days"]'),
-  hours: document.querySelector('[data-value="hours"]'),
-  mins: document.querySelector('[data-value="mins"]'),
-  secs: document.querySelector('[data-value="secs"]'),
-};
-
 // Принимает число, приводит к строке и добавляет в начало 0 если число меньше 2-х знаков
 
 function pad(value) {
@@ -42,7 +34,18 @@ function getTimeComponents(time) {
 }
 
 class CountdownTimer {
+  timer;
+  days;
+  hours;
+  mins;
+  secs;
+
   constructor({ onTick, TargetDate }) {
+    this.timer = document.getElementById("timer-1");
+    this.days = document.querySelector('[data-value="days"]');
+    this.hours = document.querySelector('[data-value="hours"]');
+    this.mins = document.querySelector('[data-value="mins"]');
+    this.secs = document.querySelector('[data-value="secs"]');
     this.intervalId = null;
     this.isActive = false;
     this.onTick = onTick;
@@ -67,15 +70,15 @@ class CountdownTimer {
 }
 
 function updateClockInterface({ days, hours, mins, secs }) {
-  refs.days.textContent = `${days}`;
-  refs.hours.textContent = `${hours}`;
-  refs.mins.textContent = `${mins}`;
-  refs.secs.textContent = `${secs}`;
+  this.days.textContent = `${days}`;
+  this.hours.textContent = `${hours}`;
+  this.mins.textContent = `${mins}`;
+  this.secs.textContent = `${secs}`;
 }
 
 const timer = new CountdownTimer({
   onTick: updateClockInterface,
-  TargetDate: new Date("Oct 18, 2021"),
+  TargetDate: new Date("January 01, 2022"),
 });
 
 timer.start();
